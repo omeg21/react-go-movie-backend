@@ -13,10 +13,8 @@ type JSONResponse struct {
 	Data    interface{} `json:"data,omitempty"`
 }
 
-// writeJSON a helper function to write JSON
 func (app *application) writeJSON(w http.ResponseWriter, status int, data interface{}, headers ...http.Header) error {
 	out, err := json.Marshal(data)
-
 	if err != nil {
 		return err
 	}
@@ -29,7 +27,6 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data interf
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-
 	_, err = w.Write(out)
 	if err != nil {
 		return err
@@ -38,9 +35,8 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data interf
 	return nil
 }
 
-// Helper function to read JSOn
 func (app *application) readJSON(w http.ResponseWriter, r *http.Request, data interface{}) error {
-	maxBytes := 1024 * 1024 //one megabyte
+	maxBytes := 1024 * 1024 // one megabyte
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
 
 	dec := json.NewDecoder(r.Body)
@@ -60,7 +56,6 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, data in
 	return nil
 }
 
-// helper function to write JSON errors
 func (app *application) errorJSON(w http.ResponseWriter, err error, status ...int) error {
 	statusCode := http.StatusBadRequest
 

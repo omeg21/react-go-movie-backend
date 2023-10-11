@@ -29,7 +29,6 @@ func (app *application) connectToDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	log.Println("connected to postgres")
-
+	log.Println("Connected to Postgres!")
 	return connection, nil
 }
